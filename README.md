@@ -1,12 +1,20 @@
-# Machine-Learning Interatomic Potentials (MLIP) for Thermal Conductivity Simulations
+# Machine-Learning Interatomic Potentials (MLIP) for Crystalline Materials
 
-This repository collects **Moment Tensor Potentials (MTP)** and the accompanying
-**LAMMPS** input scripts used to predict the lattice thermal conductivity of
-several crystalline materials via the **Green–Kubo equilibrium molecular dynamics
-(EMD)** method.
+This repository publishes a collection of **Moment Tensor Potentials (MTP)** —
+machine-learning interatomic potentials trained from first-principles data — for
+several crystalline materials.
 
-Each material folder contains everything needed to reproduce a Green–Kubo
-thermal-conductivity run with the LAMMPS–MLIP interface.
+These are **general-purpose** potentials: once trained, an MTP describes the
+energy, atomic forces, and stresses of the material and can be used for any
+standard atomistic task — molecular dynamics, geometry/cell relaxation, elastic
+and phonon properties, defect energetics, melting, and more. They are **not**
+restricted to any single application.
+
+To make the potentials easy to pick up, each material folder also ships a
+**worked example**: a ready-to-run **Green–Kubo equilibrium molecular dynamics
+(EMD)** input script for lattice thermal conductivity. Treat it as a starting
+template — swap in your own ensemble, computes, and run settings for whatever
+property you are after.
 
 ---
 
@@ -32,27 +40,45 @@ mlip/
 
 | File         | Purpose |
 |--------------|---------|
-| `in.lmp`     | LAMMPS input script: equilibration (NVT → NVE) followed by a Green–Kubo heat-flux autocorrelation run. |
-| `lammps.txt` | LAMMPS data file: simulation box, atom positions, masses, and atom types. |
+| `pot.mtp`    | **The trained Moment Tensor Potential** — the main artifact of this repository. |
 | `mlip.ini`   | MLIP interface configuration; points to the potential file (`pot.mtp`). |
-| `pot.mtp`    | The trained Moment Tensor Potential. |
+| `lammps.txt` | Example LAMMPS data file: simulation box, atom positions, masses, and atom types. |
+| `in.lmp`     | Example LAMMPS input script: a Green–Kubo thermal-conductivity run you can use as a template. |
+
+The potential itself is `pot.mtp`. The `lammps.txt` and `in.lmp` files are
+provided only to demonstrate how to load and use it.
 
 ---
 
-## Requirements
+## Using the potentials
 
-- **LAMMPS** built with the **MLIP / MTP interface** (the `pair_style mlip`).
-  The interface used here is the revised many-body heat-current interface described
-  in Wang *et al.* (see [Citation](#citation) below). A standard MLIP–LAMMPS build
-  **without** the centroid heat-current fix will give an incorrect heat flux for
-  many-body potentials.
-- The MTP files were trained with **MLIP-2** (`version = 1.1.0`, `potential_name = MTP1m`).
+The MTP files were trained with **MLIP-2** (`version = 1.1.0`,
+`potential_name = MTP1m`). You can use them anywhere the MLIP package is
+supported:
+
+- **MLIP-2 / `mlp` tool** directly — energy/force/stress evaluation, active
+  learning, and structure relaxation.
+- **LAMMPS** built with the **MLIP / MTP interface** (`pair_style mlip`), for any
+  MD or minimization workflow. Load a potential with:
+
+  ```
+  pair_style   mlip mlip.ini
+  pair_coeff   * *
+  ```
+
+  where `mlip.ini` contains `mtp-filename pot.mtp`.
+
+Because an MTP returns full energies, forces, and stresses, the same `pot.mtp`
+works for NVE/NVT/NPT dynamics, `minimize`, elastic-constant and phonon
+calculations, defect formation energies, and so on. The example below is just one
+such workflow.
 
 ---
 
-## How to run
+## Example: Green–Kubo thermal conductivity
 
-From inside any working folder (e.g. `BAs/Pristine/`):
+Each folder includes `in.lmp`, a complete Green–Kubo EMD script for the lattice
+thermal conductivity. From inside any working folder (e.g. `BAs/Pristine/`):
 
 ```bash
 lmp -in in.lmp
@@ -60,7 +86,7 @@ lmp -in in.lmp
 
 (or `mpirun -np <N> lmp -in in.lmp` for a parallel run).
 
-### What the script does
+### What the example does
 
 1. Reads the structure from `lammps.txt` and the MTP from `mlip.ini` → `pot.mtp`.
 2. Equilibrates the system in the **NVT** ensemble, then switches to **NVE**.
@@ -78,7 +104,8 @@ Key tunable variables at the top of `in.lmp`:
 
 ### Note on the heat-flux computation
 
-Each `in.lmp` uses the **centroid** per-atom stress when building the heat flux:
+For this Green–Kubo example, `in.lmp` uses the **centroid** per-atom stress when
+building the heat flux:
 
 ```
 compute      myStress all centroid/stress/atom NULL virial
@@ -87,8 +114,11 @@ compute      myStress all centroid/stress/atom NULL virial
 `compute centroid/stress/atom` is **required** for correct heat-current
 calculations with many-body potentials such as MTP. Using the plain
 `stress/atom` compute underestimates the contribution of many-body interactions
-to the heat flux and yields an incorrect thermal conductivity. See the LAMMPS–MLIP
-interface paper in the [Citation](#citation) section.
+to the heat flux and yields an incorrect thermal conductivity. This applies to the
+heat-flux calculation specifically; ordinary MD/minimization runs do not need it.
+A LAMMPS build with the revised many-body heat-current MLIP interface (see the
+interface paper in the [Citation](#citation) section) is recommended for this
+example.
 
 ---
 
@@ -111,10 +141,10 @@ If you use these potentials or input scripts, please cite the relevant paper(s).
   > *Physical Review Materials* **8**(4), 043804 (2024).
   > DOI: [10.1103/PhysRevMaterials.8.043804](https://doi.org/10.1103/PhysRevMaterials.8.043804)
 
-### LAMMPS–MLIP interface
+### LAMMPS–MLIP interface (for the Green–Kubo example)
 
-The `in.lmp` scripts target the **revised** many-body heat-current LAMMPS–MLIP
-(MTP) interface. Please also cite:
+If you use the Green–Kubo thermal-conductivity example, it relies on the
+**revised** many-body heat-current LAMMPS–MLIP (MTP) interface. Please also cite:
 
 > S. T. Tai, C. Wang, R. Cheng, and Y. Chen,
 > "Revisiting Many-Body Interaction Heat Current and Thermal Conductivity
