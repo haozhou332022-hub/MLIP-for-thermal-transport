@@ -183,6 +183,22 @@ If you use these potentials or input scripts, please cite the relevant paper(s).
   > *Physical Review B* **112**(23), 235308 (2025).
   > DOI: [10.1103/w7qp-tl6z](https://doi.org/10.1103/w7qp-tl6z)
 
+### Moment Tensor Potential method and MLIP package
+
+These potentials are Moment Tensor Potentials trained and run with the MLIP
+package. Please cite the original method and the software:
+
+> A. V. Shapeev,
+> "Moment Tensor Potentials: A Class of Systematically Improvable Interatomic
+> Potentials,"
+> *Multiscale Modeling & Simulation* **14**(3), 1153–1173 (2016).
+> DOI: [10.1137/15M1054183](https://doi.org/10.1137/15M1054183)
+
+> I. S. Novikov, K. Gubaev, E. V. Podryabinkin, and A. V. Shapeev,
+> "The MLIP package: moment tensor potentials with MPI and active learning,"
+> *Machine Learning: Science and Technology* **2**(2), 025002 (2021).
+> DOI: [10.1088/2632-2153/abc9fe](https://doi.org/10.1088/2632-2153/abc9fe)
+
 ### LAMMPS–MLIP interface (for the Green–Kubo example)
 
 If you use the Green–Kubo thermal-conductivity example, it relies on the
