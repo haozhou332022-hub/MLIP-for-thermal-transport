@@ -22,6 +22,7 @@ whatever property you are after.
 
 - **Hao Zhou** — [haozhou332022@gmail.com](mailto:haozhou332022@gmail.com)
 - **Janak Tiwari** — [Janak.Tiwari1@inl.gov](mailto:Janak.Tiwari1@inl.gov)
+- **Khalid Zobaid Adnan**
 - **Tianli Feng** — [tianli.feng2011@gmail.com](mailto:tianli.feng2011@gmail.com)
 
 ---
