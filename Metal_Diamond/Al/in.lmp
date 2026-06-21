@@ -23,17 +23,6 @@ read_data lammps.txt
 pair_style mlip mlip.ini
 pair_coeff * * 
 
-### wrong ###########
-#pair_style hybrid lj/cut 12 tersoff/table tersoff/table
-#pair_coeff 1 1  tersoff/table SiCGe.tersoff Si(D)  # Tersoff potential must be * *, cannot specify 1 1
-#pair_coeff 2 2  tersoff/table newC.tersoff C
-#pair_coeff 1 2  lj/cut 0.008909 3.326
-
-#pair_style hybrid lj/cut 8.5 tersoff tersoff
-#pair_coeff * * tersoff 1 SiCGe.tersoff Si(D) NULL 
-#pair_coeff * * tersoff 2 SiCGe.tersoff NULL Ge
-#pair_coeff 1 2 lj/cut 0.1664 3.4
-
 # define cold and hot regions
 
 variable 	l_c equal 5.442
