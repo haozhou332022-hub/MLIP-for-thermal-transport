@@ -43,7 +43,7 @@ mlip/
 ├── La2Zr2O7/             # Lanthanum zirconate (La, Zr, O)
 │   └── Pristine/
 ├── GaN_AlN/              # GaN/AlN heterointerface (Ga, Al, N)
-├── Metal_Diamond/        # Metal/diamond interfaces (coming soon)
+├── Metal_Diamond/        # Metal/diamond interfaces (metal + C)
 │   ├── Al/               #   Al/diamond
 │   ├── Zr/               #   Zr/diamond
 │   ├── Mo/               #   Mo/diamond
@@ -149,15 +149,17 @@ example.
 
 ---
 
-## Example: GaN/AlN interface (NEMD)
+## Example: interfaces (NEMD)
 
-The `GaN_AlN/` folder provides a potential trained for the **GaN/AlN
-heterointerface** (species: Ga, Al, N), suitable for simulating the interface
+The interface folders provide potentials suitable for simulating the interface
 itself — interfacial structure, dynamics, and **interfacial (Kapitza) thermal
-resistance / conductance**.
+resistance / conductance**:
 
-Its `in.lmp` is a **non-equilibrium molecular dynamics (NEMD)** example rather
-than a Green–Kubo run:
+- `GaN_AlN/` — the GaN/AlN heterointerface (species: Ga, Al, N).
+- `Metal_Diamond/{Al,Zr,Mo,Au}/` — metal/diamond interfaces (each: metal + C).
+
+Each of these folders ships an `in.lmp` that is a **non-equilibrium molecular
+dynamics (NEMD)** example rather than a Green–Kubo run:
 
 1. Reads the interface structure from `lammps.txt` and the MTP from `mlip.ini`.
 2. Fixes the slab edges and equilibrates the middle region in **NVT**, then
