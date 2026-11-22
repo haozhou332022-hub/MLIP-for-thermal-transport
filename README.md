@@ -50,7 +50,11 @@ mlip/
 │   └── Au/               #   Au/diamond
 ├── ZrC/                  # Zirconium carbide (coming soon)
 ├── UO2/                  # Uranium dioxide (coming soon)
-└── Al2O3/                # Alumina (coming soon)
+└── Al2O3/                # Alumina (Al, O), one potential per temperature
+    ├── T500K/            #   500 K
+    ├── T1000K/           #   1000 K
+    ├── T1500K/           #   1500 K
+    └── T2000K/           #   2000 K
 ```
 
 Folders marked *coming soon* are placeholders; their potentials will be added
@@ -62,11 +66,11 @@ below.
 A populated folder always contains the potential, and **may** also contain an
 example:
 
-| File         | Always present? | Purpose |
-|--------------|:---------------:|---------|
-| `pot.mtp`    | yes             | **The trained Moment Tensor Potential** — the main artifact of this repository. |
-| `mlip.ini`   | yes             | MLIP interface configuration; points to the potential file (`pot.mtp`). |
-| `lammps.txt` | only with an example | Example LAMMPS data file: simulation box, atom positions, masses, and atom types. |
+| File           |   Always present?   | Purpose                                                                                                         |
+| -------------- | :------------------: | --------------------------------------------------------------------------------------------------------------- |
+| `pot.mtp`    |         yes         | **The trained Moment Tensor Potential** — the main artifact of this repository.                          |
+| `mlip.ini`   |         yes         | MLIP interface configuration; points to the potential file (`pot.mtp`).                                       |
+| `lammps.txt` | only with an example | Example LAMMPS data file: simulation box, atom positions, masses, and atom types.                               |
 | `in.lmp`     | only with an example | Example LAMMPS input script you can use as a template (Green–Kubo EMD for bulk crystals; NEMD for interfaces). |
 
 The potential itself is `pot.mtp`. When present, `lammps.txt` and `in.lmp` are
@@ -98,8 +102,6 @@ Because an MTP returns full energies, forces, and stresses, the same `pot.mtp`
 works for NVE/NVT/NPT dynamics, `minimize`, elastic-constant and phonon
 calculations, defect formation energies, and so on. The example below is just one
 such workflow.
-
----
 
 ## Example: Green–Kubo thermal conductivity
 
@@ -188,45 +190,59 @@ If you use these potentials or input scripts, please cite the relevant paper(s).
 ### Materials
 
 - **BAs (boron arsenide)** and **Diamond**:
+
   > H. Zhou, S. Zhou, Z. Hua, K. Bawane, and T. Feng,
   > "Impact of classical statistics on thermal conductivity predictions of BAs and
   > diamond using machine learning molecular dynamics,"
   > *Applied Physics Letters* **125**(17), 172202 (2024).
   > DOI: [10.1063/5.0238592](https://doi.org/10.1063/5.0238592)
-
+  >
 - **La₂Zr₂O₇ (lanthanum zirconate)**:
+
   > H. Zhou, J. Tiwari, and T. Feng,
   > "Understanding the flat thermal conductivity of La₂Zr₂O₇ at ultrahigh temperatures,"
   > *Physical Review Materials* **8**(4), 043804 (2024).
   > DOI: [10.1103/PhysRevMaterials.8.043804](https://doi.org/10.1103/PhysRevMaterials.8.043804)
-
+  >
 - **GaN/AlN interface**:
+
   > H. Zhou, K. Z. Adnan, W. A. Jones, and T. Feng,
   > "Thermal boundary conductance in standalone and nonstandalone GaN/AlN
   > heterostructures predicted using machine-learning interatomic potentials,"
   > *Physical Review B* **112**(23), 235308 (2025).
   > DOI: [10.1103/w7qp-tl6z](https://doi.org/10.1103/w7qp-tl6z)
-
+  >
 - **Metal/diamond interfaces** (Al, Zr, Mo, Au):
+
   > K. Z. Adnan, M. R. Neupane, and T. Feng,
   > "Thermal boundary conductance of metal–diamond interfaces predicted by machine
   > learning interatomic potentials,"
   > *International Journal of Heat and Mass Transfer* **235**, 126227 (2024).
   > DOI: [10.1016/j.ijheatmasstransfer.2024.126227](https://doi.org/10.1016/j.ijheatmasstransfer.2024.126227)
+  >
+- **Al₂O₃ (alumina)**:
 
+  > J. Tiwari and T. Feng,
+  > "Accurate prediction of thermal conductivity of Al₂O₃ at ultrahigh temperatures,"
+  > *Physical Review B* **109**(7), 075201 (2024).
+  > DOI: [10.1103/PhysRevB.109.075201](https://doi.org/10.1103/PhysRevB.109.075201)
+  >
 - **ZrC (zirconium carbide)**:
+
   > J. Tiwari and T. Feng,
   > "Intrinsic thermal conductivity of ZrC from low to ultrahigh temperatures: A
   > critical revisit,"
   > *Physical Review Materials* **7**(6), 065001 (2023).
   > DOI: [10.1103/PhysRevMaterials.7.065001](https://doi.org/10.1103/PhysRevMaterials.7.065001)
-
+  >
 - **UO₂ (uranium dioxide)**:
+
   > X. Yang, J. Tiwari, and T. Feng,
   > "Reduced anharmonic phonon scattering cross-section slows the decrease of
   > thermal conductivity with temperature,"
   > *Materials Today Physics* **24**, 100689 (2022).
   > DOI: [10.1016/j.mtphys.2022.100689](https://doi.org/10.1016/j.mtphys.2022.100689)
+  >
 
 ### Moment Tensor Potential method and MLIP package
 
