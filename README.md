@@ -48,8 +48,14 @@ mlip/
 │   ├── Zr/               #   Zr/diamond
 │   ├── Mo/               #   Mo/diamond
 │   └── Au/               #   Au/diamond
-├── ZrC/                  # Zirconium carbide (coming soon)
-├── UO2/                  # Uranium dioxide (coming soon)
+├── ZrC/                  # Zirconium carbide (Zr, C), one potential per temperature
+│   ├── T300K/            #   300 K
+│   ├── T1000K/           #   1000 K
+│   ├── T1500K/           #   1500 K
+│   ├── T2000K/           #   2000 K
+│   └── T2500K/           #   2500 K
+├── UO2/                  # Uranium dioxide (U, O)
+│   └── Pristine/
 └── Al2O3/                # Alumina (Al, O), one potential per temperature
     ├── T500K/            #   500 K
     ├── T1000K/           #   1000 K
@@ -57,8 +63,7 @@ mlip/
     └── T2000K/           #   2000 K
 ```
 
-Folders marked *coming soon* are placeholders; their potentials will be added
-later. Not every folder ships a LAMMPS example — see [Folder contents](#folder-contents)
+Not every folder ships a LAMMPS example — see [Folder contents](#folder-contents)
 below.
 
 ### Folder contents
